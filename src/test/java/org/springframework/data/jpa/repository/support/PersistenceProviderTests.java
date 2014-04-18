@@ -72,16 +72,6 @@ public class PersistenceProviderTests {
 	}
 
 	@Test
-	public void detectsOpenJpaPersistenceProvider() throws Exception {
-
-		shadowingClassLoader.excludePackage("org.apache.openjpa.persistence");
-
-		EntityManager em = mockProviderSpecificEntityManagerInterface(PersistenceProvider.Constants.OPENJPA_ENTITY_MANAGER_INTERFACE);
-
-		assertThat(PersistenceProvider.fromEntityManager(em), is(PersistenceProvider.OPEN_JPA));
-	}
-
-	@Test
 	public void detectsEclipseLinkPersistenceProvider() throws Exception {
 
 		shadowingClassLoader.excludePackage("org.eclipse.persistence.jpa");

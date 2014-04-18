@@ -23,7 +23,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.apache.openjpa.persistence.OpenJPAQuery;
 import org.eclipse.persistence.jpa.JpaQuery;
 import org.hibernate.ejb.HibernateQuery;
 import org.springframework.data.jpa.repository.query.QueryExtractor;
@@ -76,17 +75,6 @@ public enum PersistenceProvider implements QueryExtractor {
 			return ((JpaQuery<?>) query).getDatabaseQuery().getJPQLString();
 		}
 
-	},
-
-	/**
-	 * OpenJpa persistence provider.
-	 */
-	OPEN_JPA(Constants.OPENJPA_ENTITY_MANAGER_INTERFACE) {
-
-		public String extractQueryString(Query query) {
-
-			return ((OpenJPAQuery<?>) query).getQueryString();
-		}
 	},
 
 	/**

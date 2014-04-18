@@ -44,7 +44,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:application-context.xml"
 // , "classpath:eclipselink.xml"
-// , "classpath:openjpa.xml"
 })
 @Transactional
 public class SimpleJpaParameterBindingTests {

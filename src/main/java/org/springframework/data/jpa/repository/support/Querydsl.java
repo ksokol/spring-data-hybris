@@ -77,8 +77,6 @@ public class Querydsl {
 				return new JPAQuery(em, EclipseLinkTemplates.DEFAULT);
 			case HIBERNATE:
 				return new JPAQuery(em, HQLTemplates.DEFAULT);
-			case OPEN_JPA:
-				return new JPAQuery(em, OpenJPATemplates.DEFAULT);
 			case GENERIC_JPA:
 			default:
 				return new JPAQuery(em);
