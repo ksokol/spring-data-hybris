@@ -30,12 +30,9 @@ import javax.persistence.IdClass;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
-import javax.persistence.metamodel.Metamodel;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.data.jpa.domain.sample.Role;
 import org.springframework.data.jpa.domain.sample.SampleWithIdClass;
 import org.springframework.data.jpa.domain.sample.SampleWithIdClassPK;
@@ -63,21 +60,6 @@ public class JpaMetamodelEntityInformationIntegrationTests {
 
 		JpaEntityInformation<User, ?> information = JpaEntityInformationSupport.getMetadata(User.class, em);
 		assertThat(information.getIdType(), is(typeCompatibleWith(Integer.class)));
-	}
-
-	/**
-	 * Ignored for Hibernate as it does not implement {@link Metamodel#managedType(Class)} correctly (does not consider
-	 * {@link MappedSuperclass}es correctly).
-	 * 
-	 * @see https://hibernate.onjira.com/browse/HHH-6896
-	 * @see DATAJPA-141
-	 */
-	@Test
-	@Ignore
-	public void detectsIdTypeForMappedSuperclass() {
-
-		JpaEntityInformation<?, ?> information = JpaEntityInformationSupport.getMetadata(AbstractPersistable.class, em);
-		assertEquals(Serializable.class, information.getIdType());
 	}
 
 	/**
