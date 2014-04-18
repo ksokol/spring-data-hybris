@@ -10,7 +10,6 @@
 	<import resource="../infrastructure.xml" />
 
 	<jpa:repositories base-package="org.springframework.**.repository.sample">
-        <repository:exclude-filter type="assignable" expression="org.springframework.data.jpa.repository.sample.AuditableUserRepository" />
     </jpa:repositories>
 
 </beans>

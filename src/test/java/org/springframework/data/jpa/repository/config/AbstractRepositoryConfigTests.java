@@ -20,7 +20,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.sample.AuditableUserRepository;
 import org.springframework.data.jpa.repository.sample.RoleRepository;
 import org.springframework.data.jpa.repository.sample.UserRepository;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -39,9 +38,6 @@ public abstract class AbstractRepositoryConfigTests {
 	@Autowired(required = false)
 	RoleRepository roleRepository;
 
-	@Autowired(required = false)
-	AuditableUserRepository auditableUserRepository;
-
 	/**
 	 * Asserts that context creation detects 3 repository beans.
 	 */
@@ -50,7 +46,6 @@ public abstract class AbstractRepositoryConfigTests {
 
 		assertNotNull(userRepository);
 		assertNotNull(roleRepository);
-		assertNotNull(auditableUserRepository);
 	}
 
 	@Test
@@ -58,6 +53,5 @@ public abstract class AbstractRepositoryConfigTests {
 
 		JpaRepositoriesRegistrarIntegrationTests.assertExceptionTranslationActive(userRepository);
 		JpaRepositoriesRegistrarIntegrationTests.assertExceptionTranslationActive(roleRepository);
-		JpaRepositoriesRegistrarIntegrationTests.assertExceptionTranslationActive(auditableUserRepository);
 	}
 }

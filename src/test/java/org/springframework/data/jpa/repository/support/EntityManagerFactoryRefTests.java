@@ -20,9 +20,7 @@ import javax.persistence.EntityManagerFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.sample.AuditableUser;
 import org.springframework.data.jpa.domain.sample.User;
-import org.springframework.data.jpa.repository.sample.AuditableUserRepository;
 import org.springframework.data.jpa.repository.sample.UserRepository;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -40,9 +38,6 @@ public class EntityManagerFactoryRefTests {
 	@Autowired
 	UserRepository userRepository;
 
-	@Autowired
-	AuditableUserRepository auditableUserRepository;
-
 	@Test
 	@Transactional
 	public void useUserRepository() throws Exception {
@@ -50,10 +45,4 @@ public class EntityManagerFactoryRefTests {
 		userRepository.saveAndFlush(new User("firstname", "lastname", "foo@bar.de"));
 	}
 
-	@Test
-	@Transactional("transactionManager-2")
-	public void useAuditableUserRepository() throws Exception {
-
-		auditableUserRepository.saveAndFlush(new AuditableUser());
-	}
 }

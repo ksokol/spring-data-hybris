@@ -41,13 +41,11 @@
 
 	<jpa:repositories base-package="org.springframework.data.jpa.repository.sample"
 		entity-manager-factory-ref="entityManagerFactory">
-		<repository:exclude-filter type="assignable" expression="org.springframework.data.jpa.repository.sample.AuditableUserRepository" />
 	</jpa:repositories>
 
 	<jpa:repositories base-package="org.springframework.data.jpa.repository.sample"
 		entity-manager-factory-ref="entityManagerFactory-2"
 		transaction-manager-ref="transactionManager-2">
-		<repository:include-filter type="assignable" expression="org.springframework.data.jpa.repository.sample.AuditableUserRepository" />
 	</jpa:repositories>
 
 </beans>

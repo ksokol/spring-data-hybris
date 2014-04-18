@@ -37,6 +37,5 @@ public class JpaRepositoryNameSpaceHandler extends NamespaceHandlerSupport {
 		RepositoryBeanDefinitionParser repositoryBeanDefinitionParser = new RepositoryBeanDefinitionParser(extension);
 
 		registerBeanDefinitionParser("repositories", repositoryBeanDefinitionParser);
-		registerBeanDefinitionParser("auditing", new AuditingBeanDefinitionParser());
 	}
 }

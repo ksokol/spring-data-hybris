@@ -54,7 +54,7 @@ public class JpaRepositoriesRegistrarUnitTests {
 		registrar.registerBeanDefinitions(metadata, registry);
 
 		Iterable<String> names = Arrays.asList(registry.getBeanDefinitionNames());
-		assertThat(names, hasItems("userRepository", "auditableUserRepository", "roleRepository"));
+		assertThat(names, hasItems("userRepository", "roleRepository"));
 	}
 
 	@EnableJpaRepositories(basePackageClasses = UserRepository.class)

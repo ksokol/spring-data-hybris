@@ -3,10 +3,7 @@
 	<persistence-unit name="spring-data-jpa">
 		<class>org.springframework.data.jpa.domain.sample.AbstractMappedType</class>
 		<class>org.springframework.data.jpa.domain.AbstractPersistable</class>
-		<class>org.springframework.data.jpa.domain.AbstractAuditable</class>
 		<class>org.springframework.data.jpa.domain.sample.Account</class>
-		<class>org.springframework.data.jpa.domain.sample.AuditableUser</class>
-        <class>org.springframework.data.jpa.domain.sample.AuditableRole</class>
 		<class>org.springframework.data.jpa.domain.sample.Parent</class>
 		<class>org.springframework.data.jpa.domain.sample.Child</class>
 		<class>org.springframework.data.jpa.domain.sample.Role</class>

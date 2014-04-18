@@ -39,7 +39,7 @@ public class JpaRepositoryConfigDefinitionParserTests {
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
 		reader.loadBeanDefinitions(new ClassPathResource("multiple-entity-manager-integration-context.xml"));
 
-		BeanDefinition definition = factory.getBeanDefinition("auditableUserRepository");
+		BeanDefinition definition = factory.getBeanDefinition("userRepository");
 		assertThat(definition, is(notNullValue()));
 
 		PropertyValue transactionManager = definition.getPropertyValues().getPropertyValue("transactionManager");

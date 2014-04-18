@@ -39,6 +39,5 @@ public class TypeFilterConfigTests extends AbstractRepositoryConfigTests {
 
 		assertNotNull(userRepository);
 		assertNotNull(roleRepository);
-		assertNull(auditableUserRepository);
 	}
 }
