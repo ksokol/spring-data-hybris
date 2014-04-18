@@ -39,7 +39,6 @@ import org.springframework.data.jpa.domain.sample.User;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.jpa.repository.sample.UserRepository;
 import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.core.support.DefaultRepositoryMetadata;
@@ -184,17 +183,6 @@ public class JpaQueryMethodUnitTests {
 	}
 
 	@Test
-	public void discoversHintsCorrectly() {
-
-		JpaQueryMethod method = new JpaQueryMethod(repositoryMethod, metadata, extractor);
-		List<QueryHint> hints = method.getHints();
-
-		assertNotNull(hints);
-		assertThat(hints.get(0).name(), is("foo"));
-		assertThat(hints.get(0).value(), is("bar"));
-	}
-
-	@Test
 	public void calculatesNamedQueryNamesCorrectly() throws SecurityException, NoSuchMethodException {
 
 		RepositoryMetadata metadata = new DefaultRepositoryMetadata(UserRepository.class);
@@ -303,14 +291,11 @@ public class JpaQueryMethodUnitTests {
 	 * @see DATAJPA-345
 	 */
 	@Test
-	public void detectsLockAndQueryHintsOnIfUsedAsMetaAnnotation() {
+	public void detectsLockIfUsedAsMetaAnnotation() {
 
 		JpaQueryMethod method = new JpaQueryMethod(withMetaAnnotation, metadata, extractor);
 
 		assertThat(method.getLockModeType(), is(LockModeType.OPTIMISTIC_FORCE_INCREMENT));
-		assertThat(method.getHints(), hasSize(1));
-		assertThat(method.getHints().get(0).name(), is("foo"));
-		assertThat(method.getHints().get(0).value(), is("bar"));
 	}
 
 	/**
@@ -364,15 +349,13 @@ public class JpaQueryMethodUnitTests {
 		List<Integer> findsProjections();
 
 		Integer findsProjection();
+        @CustomAnnotation
+        void withMetaAnnotation();
+    }
 
-		@CustomAnnotation
-		void withMetaAnnotation();
-	}
+    @Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT)
+    @Retention(RetentionPolicy.RUNTIME)
+    static @interface CustomAnnotation {
 
-	@Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT)
-	@QueryHints(@QueryHint(name = "foo", value = "bar"))
-	@Retention(RetentionPolicy.RUNTIME)
-	static @interface CustomAnnotation {
-
-	}
+    }
 }

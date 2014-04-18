@@ -25,7 +25,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.QueryHint;
 import javax.persistence.TypedQuery;
 
 import org.junit.Before;
@@ -33,7 +32,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.data.jpa.domain.sample.User;
 import org.springframework.data.jpa.repository.Lock;
-import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.jpa.repository.support.PersistenceProvider;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.core.support.DefaultRepositoryMetadata;
@@ -63,48 +61,6 @@ public class AbstractJpaQueryTests {
 	}
 
 	/**
-	 * @see DATADOC-97
-	 * @throws Exception
-	 */
-	@Test
-	public void addsHintsToQueryObject() throws Exception {
-
-		Method method = SampleRepository.class.getMethod("findByLastname", String.class);
-		QueryExtractor provider = PersistenceProvider.fromEntityManager(em);
-		JpaQueryMethod queryMethod = new JpaQueryMethod(method, new DefaultRepositoryMetadata(SampleRepository.class),
-				provider);
-
-		AbstractJpaQuery jpaQuery = new DummyJpaQuery(queryMethod, em);
-
-		Query result = jpaQuery.createQuery(new Object[] { "Matthews" });
-		verify(result).setHint("foo", "bar");
-
-		result = jpaQuery.createCountQuery(new Object[] { "Matthews" });
-		verify(result).setHint("foo", "bar");
-	}
-
-	/**
-	 * @see DATAJPA-54
-	 * @throws Exception
-	 */
-	@Test
-	public void skipsHintsForCountQueryIfConfigured() throws Exception {
-
-		Method method = SampleRepository.class.getMethod("findByFirstname", String.class);
-		QueryExtractor provider = PersistenceProvider.fromEntityManager(em);
-		JpaQueryMethod queryMethod = new JpaQueryMethod(method, new DefaultRepositoryMetadata(SampleRepository.class),
-				provider);
-
-		AbstractJpaQuery jpaQuery = new DummyJpaQuery(queryMethod, em);
-
-		Query result = jpaQuery.createQuery(new Object[] { "Dave" });
-		verify(result).setHint("bar", "foo");
-
-		result = jpaQuery.createCountQuery(new Object[] { "Dave" });
-		verify(result, never()).setHint("bar", "foo");
-	}
-
-	/**
 	 * @see DATAJPA-73
 	 */
 	@Test
@@ -124,10 +80,8 @@ public class AbstractJpaQueryTests {
 
 	interface SampleRepository extends Repository<User, Integer> {
 
-		@QueryHints({ @QueryHint(name = "foo", value = "bar") })
 		List<User> findByLastname(String lastname);
 
-		@QueryHints(value = { @QueryHint(name = "bar", value = "foo") }, forCounting = false)
 		List<User> findByFirstname(String firstname);
 
 		@Lock(LockModeType.PESSIMISTIC_WRITE)

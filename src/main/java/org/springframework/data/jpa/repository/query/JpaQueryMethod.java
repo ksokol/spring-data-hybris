@@ -18,21 +18,16 @@ package org.springframework.data.jpa.repository.query;
 import static org.springframework.core.annotation.AnnotationUtils.*;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.LockModeType;
-import javax.persistence.QueryHint;
 
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.jpa.repository.support.DefaultJpaEntityMetadata;
 import org.springframework.data.jpa.repository.support.JpaEntityMetadata;
 import org.springframework.data.repository.core.RepositoryMetadata;
@@ -133,23 +128,6 @@ public class JpaQueryMethod extends QueryMethod {
 	}
 
 	/**
-	 * Returns all {@link QueryHint}s annotated at this class. Note, that {@link QueryHints}
-	 * 
-	 * @return
-	 */
-	List<QueryHint> getHints() {
-
-		List<QueryHint> result = new ArrayList<QueryHint>();
-
-		QueryHints hints = getAnnotation(method, QueryHints.class);
-		if (hints != null) {
-			result.addAll(Arrays.asList(hints.value()));
-		}
-
-		return result;
-	}
-
-	/**
 	 * Returns the {@link LockModeType} to be used for the query.
 	 * 
 	 * @return
@@ -158,18 +136,6 @@ public class JpaQueryMethod extends QueryMethod {
 
 		Lock annotation = findAnnotation(method, Lock.class);
 		return (LockModeType) AnnotationUtils.getValue(annotation);
-	}
-
-	/**
-	 * Returns whether the potentially configured {@link QueryHint}s shall be applied when triggering the count query for
-	 * pagination.
-	 * 
-	 * @return
-	 */
-	boolean applyHintsToCountQuery() {
-
-		QueryHints hints = getAnnotation(method, QueryHints.class);
-		return hints != null ? hints.forCounting() : false;
 	}
 
 	/**

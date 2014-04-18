@@ -110,21 +110,6 @@ public abstract class AbstractJpaQuery implements RepositoryQuery {
 	}
 
 	/**
-	 * Applies the declared query hints to the given query.
-	 * 
-	 * @param query
-	 * @return
-	 */
-	private <T extends Query> T applyHints(T query, JpaQueryMethod method) {
-
-		for (QueryHint hint : method.getHints()) {
-			query.setHint(hint.name(), hint.value());
-		}
-
-		return query;
-	}
-
-	/**
 	 * Applies the {@link LockModeType} provided by the {@link JpaQueryMethod} to the given {@link Query}.
 	 * 
 	 * @param query must not be {@literal null}.
@@ -142,12 +127,12 @@ public abstract class AbstractJpaQuery implements RepositoryQuery {
 	}
 
 	protected Query createQuery(Object[] values) {
-		return applyLockMode(applyHints(doCreateQuery(values), method), method);
+		return applyLockMode(doCreateQuery(values), method);
 	}
 
 	protected TypedQuery<Long> createCountQuery(Object[] values) {
 		TypedQuery<Long> countQuery = doCreateCountQuery(values);
-		return method.applyHintsToCountQuery() ? applyHints(countQuery, method) : countQuery;
+		return countQuery;
 	}
 
 	/**
