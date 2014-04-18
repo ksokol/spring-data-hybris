@@ -72,16 +72,6 @@ public class PersistenceProviderTests {
 	}
 
 	@Test
-	public void detectsEclipseLinkPersistenceProvider() throws Exception {
-
-		shadowingClassLoader.excludePackage("org.eclipse.persistence.jpa");
-
-		EntityManager em = mockProviderSpecificEntityManagerInterface(PersistenceProvider.Constants.ECLIPSELINK_ENTITY_MANAGER_INTERFACE);
-
-		assertThat(PersistenceProvider.fromEntityManager(em), is(PersistenceProvider.ECLIPSELINK));
-	}
-
-	@Test
 	public void fallbackToGenericJpaForUnknownPersistenceProvider() throws Exception {
 
 		EntityManager em = mockProviderSpecificEntityManagerInterface("foo.bar.unknown.jpa.JpaEntityManager");

@@ -22,7 +22,6 @@
 
 		<dist.key>DATAHYBRIS</dist.key>
 
-		<eclipselink>2.5.1</eclipselink>
 		<hibernate>3.6.10.Final</hibernate>
 		<hsqldb1>1.8.0.10</hsqldb1>
 		<jpa>2.0.0</jpa>
@@ -144,13 +143,6 @@
 			<optional>true</optional>
 		</dependency>
 
-		<dependency>
-			<groupId>org.eclipse.persistence</groupId>
-			<artifactId>org.eclipse.persistence.jpa</artifactId>
-			<version>${eclipselink}</version>
-			<optional>true</optional>
-		</dependency>
-
 		<!-- QueryDsl -->
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
@@ -257,22 +249,8 @@
 							</includes>
 							<excludes>
 								<exclude>**/*UnitTests.java</exclude>
-								<exclude>**/EclipseLink*</exclude>
 								<exclude>**/infrastructure/*</exclude>
 							</excludes>
-							<argLine>-javaagent:${settings.localRepository}/org/springframework/spring-instrument/${spring}/spring-instrument-${spring}.jar</argLine>
-						</configuration>
-					</execution>
-					<execution>
-						<id>eclipselink-tests</id>
-						<goals>
-							<goal>test</goal>
-						</goals>
-						<phase>test</phase>
-						<configuration>
-							<includes>
-								<include>**/EclipseLink*Tests.java</include>
-							</includes>
 							<argLine>-javaagent:${settings.localRepository}/org/springframework/spring-instrument/${spring}/spring-instrument-${spring}.jar</argLine>
 						</configuration>
 					</execution>

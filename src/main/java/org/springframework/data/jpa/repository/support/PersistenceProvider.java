@@ -23,7 +23,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.eclipse.persistence.jpa.JpaQuery;
 import org.hibernate.ejb.HibernateQuery;
 import org.springframework.data.jpa.repository.query.QueryExtractor;
 import org.springframework.util.Assert;
@@ -66,18 +65,6 @@ public enum PersistenceProvider implements QueryExtractor {
 	},
 
 	/**
-	 * EclipseLink persistence provider.
-	 */
-	ECLIPSELINK(Constants.ECLIPSELINK_ENTITY_MANAGER_INTERFACE) {
-
-		public String extractQueryString(Query query) {
-
-			return ((JpaQuery<?>) query).getDatabaseQuery().getJPQLString();
-		}
-
-	},
-
-	/**
 	 * Unknown special provider. Use standard JPA.
 	 */
 	GENERIC_JPA(Constants.GENERIC_JPA_ENTITY_MANAGER_INTERFACE) {
@@ -102,8 +89,6 @@ public enum PersistenceProvider implements QueryExtractor {
 	static interface Constants {
 
 		String GENERIC_JPA_ENTITY_MANAGER_INTERFACE = "javax.persistence.EntityManager";
-		String OPENJPA_ENTITY_MANAGER_INTERFACE = "org.apache.openjpa.persistence.OpenJPAEntityManager";
-		String ECLIPSELINK_ENTITY_MANAGER_INTERFACE = "org.eclipse.persistence.jpa.JpaEntityManager";
 		String HIBERNATE_ENTITY_MANAGER_INTERFACE = "org.hibernate.ejb.HibernateEntityManager";
 		String HIBERNATE43_ENTITY_MANAGER_INTERFACE = "org.hibernate.jpa.HibernateEntityManager";
 	}

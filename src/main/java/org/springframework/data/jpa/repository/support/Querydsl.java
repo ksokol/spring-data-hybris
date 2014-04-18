@@ -73,8 +73,6 @@ public class Querydsl {
 	public JPQLQuery createQuery() {
 
 		switch (provider) {
-			case ECLIPSELINK:
-				return new JPAQuery(em, EclipseLinkTemplates.DEFAULT);
 			case HIBERNATE:
 				return new JPAQuery(em, HQLTemplates.DEFAULT);
 			case GENERIC_JPA:
