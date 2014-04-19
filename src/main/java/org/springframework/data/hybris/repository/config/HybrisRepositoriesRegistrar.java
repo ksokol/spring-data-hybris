@@ -13,20 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.data.jpa.repository.config;
+package org.springframework.data.hybris.repository.config;
 
 import java.lang.annotation.Annotation;
 
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+
 import org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupport;
 import org.springframework.data.repository.config.RepositoryConfigurationExtension;
 
 /**
- * {@link ImportBeanDefinitionRegistrar} to enable {@link EnableJpaRepositories} annotation.
+ * {@link ImportBeanDefinitionRegistrar} to enable {@link EnableHybrisRepositories} annotation.
  * 
- * @author Oliver Gierke
+ * @author Kamill Sokol
  */
-class JpaRepositoriesRegistrar extends RepositoryBeanDefinitionRegistrarSupport {
+class HybrisRepositoriesRegistrar extends RepositoryBeanDefinitionRegistrarSupport {
 
 	/* 
 	 * (non-Javadoc)
@@ -34,7 +35,7 @@ class JpaRepositoriesRegistrar extends RepositoryBeanDefinitionRegistrarSupport 
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotation() {
-		return EnableJpaRepositories.class;
+		return EnableHybrisRepositories.class;
 	}
 
 	/* 
@@ -43,6 +44,6 @@ class JpaRepositoriesRegistrar extends RepositoryBeanDefinitionRegistrarSupport 
 	 */
 	@Override
 	protected RepositoryConfigurationExtension getExtension() {
-		return new JpaRepositoryConfigExtension();
+		return new HybrisRepositoryConfigExtension();
 	}
 }
