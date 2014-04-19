@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.data.jpa.repository.config;
+package org.springframework.data.hybris.repository.config;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -22,33 +22,32 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import javax.persistence.EntityManagerFactory;
-
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean;
+import org.springframework.data.hybris.repository.support.HybrisRepositoryFactoryBean;
 import org.springframework.data.repository.query.QueryLookupStrategy;
 import org.springframework.data.repository.query.QueryLookupStrategy.Key;
 import org.springframework.transaction.PlatformTransactionManager;
 
 /**
- * Annotation to enable JPA repositories. Will scan the package of the annotated configuration class for Spring Data
+ * Annotation to enable Hybris Platform repositories. Will scan the package of the annotated configuration class for Spring Data
  * repositories by default.
  * 
  * @author Oliver Gierke
  * @author Thomas Darimont
+ * @author Kamill Sokol
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@Import(JpaRepositoriesRegistrar.class)
-public @interface EnableJpaRepositories {
+@Import(HybrisRepositoriesRegistrar.class)
+public @interface EnableHybrisRepositories {
 
 	/**
 	 * Alias for the {@link #basePackages()} attribute. Allows for more concise annotation declarations e.g.:
-	 * {@code @EnableJpaRepositories("org.my.pkg")} instead of {@code @EnableJpaRepositories(basePackages="org.my.pkg")}.
+	 * {@code @EnableHybrisRepositories("org.my.pkg")} instead of {@code @EnableHybrisRepositories(basePackages="org.my.pkg")}.
 	 */
 	String[] value() default {};
 
@@ -87,8 +86,8 @@ public @interface EnableJpaRepositories {
 
 	/**
 	 * Configures the location of where to find the Spring Data named queries properties file. Will default to
-	 * {@code META-INFO/jpa-named-queries.properties}.
-	 * 
+	 * {@code resources/data/named-queries.properties}.
+	 *
 	 * @return
 	 */
 	String namedQueriesLocation() default "";
@@ -103,20 +102,35 @@ public @interface EnableJpaRepositories {
 
 	/**
 	 * Returns the {@link FactoryBean} class to be used for each repository instance. Defaults to
-	 * {@link JpaRepositoryFactoryBean}.
+	 * {@link org.springframework.data.hybris.repository.support.HybrisRepositoryFactoryBean}.
 	 * 
 	 * @return
 	 */
-	Class<?> repositoryFactoryBeanClass() default JpaRepositoryFactoryBean.class;
+	Class<?> repositoryFactoryBeanClass() default HybrisRepositoryFactoryBean.class;
 
-	// JPA specific configuration
-	/**
-	 * Configures the name of the {@link EntityManagerFactory} bean definition to be used to create repositories
-	 * discovered through this annotation. Defaults to {@code entityManagerFactory}.
-	 * 
-	 * @return
-	 */
-	String entityManagerFactoryRef() default "entityManagerFactory";
+    /**
+     * Configures the name of the {@link de.hybris.platform.servicelayer.search.FlexibleSearchService} bean definition
+     * to be used to create repositories discovered through this annotation. Defaults to {@code flexibleSearchService}.
+     *
+     * @return
+     */
+    String flexibleSearchServiceRef() default "flexibleSearchService";
+
+    /**
+     * Configures the name of the {@link de.hybris.platform.servicelayer.model.ModelService} bean definition
+     * to be used to create repositories discovered through this annotation. Defaults to {@code modelService}.
+     *
+     * @return
+     */
+    String modelServiceRef() default "modelService";
+
+    /**
+     * Configures the name of the {@link de.hybris.platform.servicelayer.type.TypeService} bean definition
+     * to be used to create repositories discovered through this annotation. Defaults to {@code typeService}.
+     *
+     * @return
+     */
+    String typeServiceRef() default "typeService";
 
 	/**
 	 * Configures the name of the {@link PlatformTransactionManager} bean definition to be used to create repositories
