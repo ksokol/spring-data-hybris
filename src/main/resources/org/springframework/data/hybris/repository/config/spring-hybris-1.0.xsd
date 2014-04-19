@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://www.springframework.org/schema/data/hybris"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tool="http://www.springframework.org/schema/tool"
+	xmlns:repository="http://www.springframework.org/schema/data/repository"
+	targetNamespace="http://www.springframework.org/schema/data/hybris"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xsd:import namespace="http://www.springframework.org/schema/tool" />
+	<xsd:import namespace="http://www.springframework.org/schema/context" />
+	<xsd:import namespace="http://www.springframework.org/schema/data/repository"
+		schemaLocation="http://www.springframework.org/schema/data/repository/spring-repository.xsd" />
+
+	<xsd:element name="repositories">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="repository:repositories">
+					<xsd:attributeGroup ref="repository:transactional-repository-attributes" />
+                    <xsd:attribute name="flexible-search-service-ref" type="flexibleSearchServiceRef" />
+                    <xsd:attribute name="model-service-ref" type="modelServiceRef" />
+                    <xsd:attribute name="type-service-ref" type="typeServiceRef" />
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+    <xsd:simpleType name="flexibleSearchServiceRef">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <tool:annotation kind="ref">
+                    <tool:assignable-to type="de.hybris.platform.servicelayer.search.FlexibleSearchService" />
+                </tool:annotation>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:union memberTypes="xsd:string" />
+    </xsd:simpleType>
+
+    <xsd:simpleType name="modelServiceRef">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <tool:annotation kind="ref">
+                    <tool:assignable-to type="de.hybris.platform.servicelayer.search.FlexibleSearchService" />
+                </tool:annotation>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:union memberTypes="xsd:string" />
+    </xsd:simpleType>
+
+    <xsd:simpleType name="typeServiceRef">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <tool:annotation kind="ref">
+                    <tool:assignable-to type="de.hybris.platform.servicelayer.search.FlexibleSearchService" />
+                </tool:annotation>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:union memberTypes="xsd:string" />
+    </xsd:simpleType>
+
+</xsd:schema>

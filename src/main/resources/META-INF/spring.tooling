@@ -1,4 +1,4 @@
-# Tooling related information for the JPA namespace
-http\://www.springframework.org/schema/data/jpa@name=JPA Namespace
-http\://www.springframework.org/schema/data/jpa@prefix=jpa
-http\://www.springframework.org/schema/data/jpa@icon=org/springframework/jdbc/config/spring-jdbc.gif
+# Tooling related information for the Hybris namespace
+http\://www.springframework.org/schema/data/hybris@name=Hybris Namespace
+http\://www.springframework.org/schema/data/hybris@prefix=hybris
+http\://www.springframework.org/schema/data/hybris@icon=org/springframework/jdbc/config/spring-jdbc.gif

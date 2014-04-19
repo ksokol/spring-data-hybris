@@ -1,1 +1,1 @@
-http\://www.springframework.org/schema/data/jpa=org.springframework.data.jpa.repository.config.JpaRepositoryNameSpaceHandler
+http\://www.springframework.org/schema/data/hybris=org.springframework.data.hybris.repository.config.HybrisRepositoryNameSpaceHandler
