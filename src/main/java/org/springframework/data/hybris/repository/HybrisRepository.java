@@ -13,24 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.data.jpa.repository;
+package org.springframework.data.hybris.repository;
 
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
+import de.hybris.platform.core.model.ItemModel;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
- * JPA specific extension of {@link org.springframework.data.repository.Repository}.
+ * Hybris Platform specific extension of {@link org.springframework.data.repository.Repository}.
  * 
- * @author Oliver Gierke
+ * @author Kamill Sokol
  */
 @NoRepositoryBean
-public interface JpaRepository<T, ID extends Serializable> extends PagingAndSortingRepository<T, ID> {
+public interface HybrisRepository<T extends ItemModel, ID extends Serializable> extends PagingAndSortingRepository<T, ID> {
 
 	/*
 	 * (non-Javadoc)
@@ -55,39 +54,4 @@ public interface JpaRepository<T, ID extends Serializable> extends PagingAndSort
 	 * @see org.springframework.data.repository.CrudRepository#save(java.lang.Iterable)
 	 */
 	<S extends T> List<S> save(Iterable<S> entities);
-
-	/**
-	 * Flushes all pending changes to the database.
-	 */
-	void flush();
-
-	/**
-	 * Saves an entity and flushes changes instantly.
-	 * 
-	 * @param entity
-	 * @return the saved entity
-	 */
-	T saveAndFlush(T entity);
-
-	/**
-	 * Deletes the given entities in a batch which means it will create a single {@link Query}. Assume that we will clear
-	 * the {@link javax.persistence.EntityManager} after the call.
-	 * 
-	 * @param entities
-	 */
-	void deleteInBatch(Iterable<T> entities);
-
-	/**
-	 * Deletes all entites in a batch call.
-	 */
-	void deleteAllInBatch();
-
-	/**
-	 * Returns a reference to the entity with the given identifier.
-	 * 
-	 * @param id must not be {@literal null}.
-	 * @return a reference to the entity with the given identifier.
-	 * @see EntityManager#getReference(Class, Object)
-	 */
-	T getOne(ID id);
 }
