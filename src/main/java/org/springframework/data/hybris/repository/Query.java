@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.data.jpa.repository;
+package org.springframework.data.hybris.repository;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -21,47 +21,26 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.springframework.data.annotation.QueryAnnotation;
-
 /**
  * Annotation to declare finder queries directly on repository methods.
  * 
- * @author Oliver Gierke
+ * @author Kamill Sokol
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-@QueryAnnotation
 @Documented
 public @interface Query {
 
 	/**
-	 * Defines the JPA query to be executed when the annotated method is called.
+	 * Defines the Hybris flexible search query to be executed when the annotated method is called.
+     * If non is configured If non is configured we will derive the query from the method name.
+     *
 	 */
 	String value() default "";
 
 	/**
 	 * Defines a special count query that shall be used for pagination queries to lookup the total number of elements for
-	 * a page. If non is configured we will derive the count query from the method name.
+	 * a page. If non is configured we will use {@link #value}.
 	 */
 	String countQuery() default "";
-
-	/**
-	 * Configures whether the given query is a native one. Defaults to {@literal false}.
-	 */
-	boolean nativeQuery() default false;
-
-	/**
-	 * The named query to be used. If not defined, a {@link javax.persistence.NamedQuery} with name of
-	 * {@code $ domainClass}.${queryMethodName}} will be used.
-	 */
-	String name() default "";
-
-	/**
-	 * Returns the name of the {@link javax.persistence.NamedQuery} to be used to execute count queries when pagination is
-	 * used. Will default to the named query name configured suffixed by {@code .count}.
-	 * 
-	 * @see #name()
-	 * @return
-	 */
-	String countName() default "";
 }
