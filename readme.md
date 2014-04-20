@@ -1,15 +1,13 @@
-# Spring Data JPA #
+# Spring Data Hybris #
 
-The primary goal of the [Spring Data](http://projects.spring.io/spring-data) project is to make it easier to build Spring-powered applications that use data access technologies. This module deals with enhanced support for JPA based data access layers.
+The primary goal of the [Spring Data](http://projects.spring.io/spring-data) project is to make it easier to build Spring-powered applications that use data access technologies. This module deals with enhanced support for Hybris Platform based data access layers.
 
 ## Features ##
 
-* Implementation of CRUD methods for JPA Entities
-* Dynamic query generation from query method names
-* Transparent triggering of JPA NamedQueries by query methods
-* Implementation domain base classes providing basic properties
-* Support for transparent auditing (created, last changed)
-* Possibility to integrate custom repository code
+* Implementation of CRUD methods for Hybris Servicelayer Models
+<del>* Dynamic query generation from query method names</del>
+* Implementation servicelayer model classes providing basic properties
+<del>* Possibility to integrate custom repository code</del>
 * Easy Spring integration with custom namespace
 
 ## Getting Help ##
@@ -24,110 +22,35 @@ For more detailed questions, use [stackoverflow](http://stackoverflow.com/questi
 
 ## Quick Start ##
 
-Download the jar though Maven:
+Setup basic Hybris Platform as well as Spring Data Hybris repository support.
 
-```xml
-<dependency>
-  <groupId>org.springframework.data</groupId>
-  <artifactId>spring-data-jpa</artifactId>
-  <version>1.5.2.RELEASE</version>
-</dependency>
-```
-
-Also include your JPA persistence provider of choice (Hibernate, EclipseLink, OpenJpa). Setup basic Spring JPA configuration as well as Spring Data JPA repository support.
-
-The simple Spring Data JPA configuration with Java-Config looks like this: 
+The simple Spring Data Hybris configuration with Java-Config looks like this:
 ```java
 @Configuration
-@EnableJpaRepositories("com.acme.repositories")
+@EnableHybrisRepositories("com.acme.repositories")
 class AppConfig {
 
-  @Bean
-  public DataSource dataSource() {
-    return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
-  }
-
-  @Bean
-  public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
-    return new JpaTransactionManager(emf);
-  }
-
-  @Bean
-  public JpaVendorAdapter jpaVendorAdapter() {
-    HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-    jpaVendorAdapter.setDatabase(Database.H2);
-    jpaVendorAdapter.setGenerateDdl(true);
-    return jpaVendorAdapter;
-  }
-
-  @Bean
-  public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-    LocalContainerEntityManagerFactoryBean lemfb = new LocalContainerEntityManagerFactoryBean();
-    lemfb.setDataSource(dataSource());
-    lemfb.setJpaVendorAdapter(jpaVendorAdapter());
-    lemfb.setPackagesToScan("com.acme");
-    return lemfb;
-  }
 }
 ```
 
-Create an entity:
+Create an item model:
 
-```java
-@Entity
-public class User {
-
-  @Id
-  @GeneratedValue
-  private Integer id;
-  private String firstname;
-  private String lastname;
-       
-  // Getters and setters
-  // (Firstname, Lastname)-constructor and noargs-constructor
-  // equals / hashcode
-}
+```xml
+<itemtype code="MyItem" jaloclass="com.acme.jalo.MyItem">
+	<attributes>
+		<attribute qualifier="name" type="java.lang.String">
+			<persistence type="property" />
+		</attribute>
+	</attributes>
+</itemtype>
 ```
 
 Create a repository interface in `com.acme.repositories`:
 
 ```java
-public interface UserRepository extends CrudRepository<User, Long> {
-  List<User> findByLastname(String lastname);
+public interface MyItemRepository extends CrudRepository<MyItemModel, PK> {
+
+  @Query("select {PK},{name} from {MyItem} where {name} = ?....")
+  List<MyItemModel> findByName(String name);
 }
 ```
-
-Write a test client
-
-```java
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = AppConfig.class)
-public class UserRepositoryIntegrationTest {
-     
-  @Autowired UserRepository repository;
-     
-  @Test
-  public void sampleTestCase() {
-    User dave = new User("Dave", "Matthews");
-    dave = repository.save(user);
-         
-    User carter = new User("Carter", "Beauford");
-    carter = repository.save(carter);
-         
-    List<User> result = repository.findByLastname("Matthews");
-    assertThat(result.size(), is(1));
-    assertThat(result, hasItem(dave));
-  }
-}
-```
-
-## Contributing to Spring Data JPA##
-
-Here are some ways for you to get involved in the community:
-
-* Get involved with the Spring community by helping out on [stackoverflow](http://stackoverflow.com/questions/tagged/spring-data-jpa) and the [forum](forum.spring.io/forum/jpa-orm) by responding to questions and joining the debate.
-* Create [JIRA](https://jira.springsource.org/browse/DATAJPA) tickets for bugs and new features and comment and vote on the ones that you are interested in.  
-* Github is for social coding: if you want to write code, we encourage contributions through pull requests from [forks of this repository](http://help.github.com/forking/). If you want to contribute code this way, please reference a JIRA ticket as well covering the specific issue you are addressing.
-* Watch for upcoming articles on Spring by [subscribing](http://spring.io/blog) to spring.io.
-
-Before we accept a non-trivial patch or pull request we will need you to sign the [contributor's agreement](https://support.springsource.com/spring_committer_signup).  Signing the contributor's agreement does not grant anyone commit rights to the main repository, but it does mean that we can accept your contributions, and you will get an author credit if we do.  Active contributors might be asked to join the core team, and given the ability to merge pull requests.
