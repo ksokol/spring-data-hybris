@@ -154,6 +154,13 @@
 		</dependency>
 
         <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <artifactId>hybris</artifactId>
             <groupId>hybris-servicelayer</groupId>
             <version>4.8.9</version>
