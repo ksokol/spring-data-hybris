@@ -21,7 +21,7 @@ import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
 import de.hybris.platform.servicelayer.type.TypeService;
 import org.springframework.data.hybris.repository.core.HybrisEntityInformation;
-import org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy;
+import org.springframework.data.hybris.repository.query.lookup.HybrisQueryLookupStrategy;
 import org.springframework.data.jpa.repository.support.LockModeRepositoryPostProcessor;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.core.EntityInformation;
@@ -101,7 +101,7 @@ public class HybrisRepositoryFactory extends RepositoryFactorySupport {
 	 */
 	@Override
 	protected QueryLookupStrategy getQueryLookupStrategy(Key key) {
-		return JpaQueryLookupStrategy.create(flexibleSearchService, typeService, key);
+		return HybrisQueryLookupStrategy.create(flexibleSearchService, typeService, key);
 	}
 
     @Override
