@@ -126,20 +126,6 @@
 
 		<!-- QueryDsl -->
 		<dependency>
-			<groupId>com.mysema.querydsl</groupId>
-			<artifactId>querydsl-apt</artifactId>
-			<version>${querydsl}</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>com.mysema.querydsl</groupId>
-			<artifactId>querydsl-jpa</artifactId>
-			<version>${querydsl}</version>
-			<optional>true</optional>
-		</dependency>
-
-		<dependency>
 			<groupId>javax.el</groupId>
 			<artifactId>el-api</artifactId>
 			<version>${cdi}</version>
@@ -244,55 +230,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-            <!--
-			<plugin>
-				<groupId>com.mysema.maven</groupId>
-				<artifactId>apt-maven-plugin</artifactId>
-				<version>${apt}</version>
-				<configuration>
-					<logOnlyOnError>true</logOnlyOnError>
-					<processors>
-						<processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
-						<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-					</processors>
-				</configuration>
-				<executions>
-					<execution>
-						<id>sources</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>process</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>target/generated-sources/annotations</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>test-sources</id>
-						<phase>generate-test-sources</phase>
-						<goals>
-							<goal>test-process</goal>
-						</goals>
-						<configuration>
-							<testOutputDirectory>target/generated-test-sources/test-annotations</testOutputDirectory>
-							<options>
-								<querydsl.excludedClasses>
-									org.springframework.data.jpa.repository.util.JpaClassUtilsUnitTests.NamedUser,org.springframework.data.jpa.repository.query.ParameterBinderUnitTests.SampleEmbeddable
-								</querydsl.excludedClasses>
-							</options>
-						</configuration>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate-jpamodelgen</artifactId>
-						<version>1.2.0.Final</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			-->
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
