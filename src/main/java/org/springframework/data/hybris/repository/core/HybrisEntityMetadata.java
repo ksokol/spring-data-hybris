@@ -2,6 +2,7 @@ package org.springframework.data.hybris.repository.core;
 
 import de.hybris.platform.core.model.ItemModel;
 import org.springframework.data.repository.core.EntityMetadata;
+import org.springframework.util.Assert;
 
 import java.lang.reflect.Field;
 
@@ -14,6 +15,7 @@ public class HybrisEntityMetadata<T extends ItemModel> implements EntityMetadata
     private final String typecode;
 
     public HybrisEntityMetadata(Class<T> domainType) {
+        Assert.notNull(domainType);
         this.domainType = domainType;
         this.typecode = extractTypecode(domainType);
     }

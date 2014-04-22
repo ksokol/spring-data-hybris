@@ -13,51 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.data.jpa.repository.support;
+package org.springframework.data.hybris.repository.support;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-import javax.persistence.Entity;
-
+import de.hybris.platform.core.model.ItemModel;
 import org.junit.Test;
+import org.springframework.data.hybris.repository.core.HybrisEntityMetadata;
 
 /**
- * Unit tests for {@link DefaultJpaEntityMetadata}.
+ * Unit tests for {@link HybrisEntityMetadata}.
  * 
- * @author Oliver Gierke
+ * @author Kamill Sokol
  */
-public class DefaultJpaEntityMetadataUnitTest {
+public class HybrisEntityMetadataUnitTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void rejectsNullDomainType() {
-		new DefaultJpaEntityMetadata(null);
+		new HybrisEntityMetadata(null);
 	}
 
 	@Test
 	public void returnsConfiguredType() {
-
-		DefaultJpaEntityMetadata<Foo> metadata = new DefaultJpaEntityMetadata<Foo>(Foo.class);
-		assertThat(metadata.getJavaType(), is(equalTo(Foo.class)));
+		HybrisEntityMetadata<ItemModel> metadata = new HybrisEntityMetadata<ItemModel>(ItemModel.class);
+		assertThat(metadata.getJavaType(), is(equalTo(ItemModel.class)));
 	}
 
-	@Test
-	public void returnsSimpleClassNameAsEntityNameByDefault() {
+    @Test
+    public void returnsConfiguredTypecode() {
+        HybrisEntityMetadata<ItemModel> metadata = new HybrisEntityMetadata<ItemModel>(ItemModel.class);
+        assertThat(metadata.getTypecode(), is("Item"));
+    }
 
-		DefaultJpaEntityMetadata<Foo> metadata = new DefaultJpaEntityMetadata<Foo>(Foo.class);
-		assertThat(metadata.getEntityName(), is(Foo.class.getSimpleName()));
-	}
-
-	@Test
-	public void returnsCustomizedEntityNameIfConfigured() {
-
-		DefaultJpaEntityMetadata<Bar> metadata = new DefaultJpaEntityMetadata<Bar>(Bar.class);
-		assertThat(metadata.getEntityName(), is("Entity"));
-	}
-
-	static class Foo {}
-
-	@Entity(name = "Entity")
-	static class Bar {}
 }
